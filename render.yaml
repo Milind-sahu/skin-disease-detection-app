@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: skin-disease-detection
+    runtime: python
+    plan: free
+    region: oregon
+    buildCommand: pip install --upgrade pip && pip install -r backend/requirements.txt
+    startCommand: cd backend && uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: MODEL_PATH
+        value: trained_model/SKIN_MODEL_BEST.keras
+      - key: PYTHON_VERSION
+        value: 3.10.0

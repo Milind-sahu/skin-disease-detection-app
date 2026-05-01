@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from contextlib import asynccontextmanager
@@ -53,6 +53,11 @@ app.mount("/static", StaticFiles(directory="app/static"), name="static")
 
 # Include routes
 app.include_router(predict.router)
+
+@app.get("/")
+async def root():
+    """Redirect to the UI interface"""
+    return RedirectResponse(url="/static/ui/index.html")
 
 @app.get("/info")
 async def get_info():
