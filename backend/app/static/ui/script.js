@@ -184,16 +184,25 @@
         };
 
         xhr.onload = () => {
+            let response = {};
+            try {
+                response = xhr.responseText ? JSON.parse(xhr.responseText) : {};
+            } catch (err) {
+                response = {};
+            }
+
             if (xhr.status === 200) {
-                const response = JSON.parse(xhr.responseText);
                 if (response.success) {
                     setUploadingUI(100);
                     displayResult(response);
                 } else {
                     setErrorUI(response.error || "Unknown error occurred");
                 }
+            } else if (xhr.status === 202 || xhr.status === 503) {
+                setErrorUI(response.error || "Model is warming up. Please retry in a few seconds.");
             } else {
-                setErrorUI(`Server error: ${xhr.status}`);
+                const message = response.error ? `${response.error} (HTTP ${xhr.status})` : `Server error: ${xhr.status}`;
+                setErrorUI(message);
             }
             state.xhr = null;
         };

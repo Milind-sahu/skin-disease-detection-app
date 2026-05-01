@@ -10,6 +10,7 @@ class SkinDiseasePredictor:
         self._tf = None
         self._load_attempted = False
         self._is_loading = False
+        self._last_error = None
         self._load_lock = threading.Lock()
         self.class_names = [
             'Atopic Dermatitis', 
@@ -45,6 +46,7 @@ class SkinDiseasePredictor:
                 if os.path.exists(model_path):
                     # Use standalone keras for loading as it handles Keras 3 formats (.keras) better
                     self.model = keras.models.load_model(model_path, compile=False)
+                    self._last_error = None
                     print(f"Model loaded successfully from {model_path}")
                 else:
                     print(f"Model not found at {model_path}")
@@ -52,6 +54,9 @@ class SkinDiseasePredictor:
             except Exception as e:
                 print(f"Error loading model: {e}")
                 self.model = None
+                self._last_error = str(e)
+                # Allow future retries if loading failed once.
+                self._load_attempted = False
             finally:
                 self._is_loading = False
 
@@ -90,12 +95,6 @@ class SkinDiseasePredictor:
                 'success': False,
                 'error': 'Model is initializing. Please retry in a few seconds.',
                 'is_loading': True
-            }
-
-        if self.model is None:
-            return {
-                'success': False,
-                'error': 'Model not loaded properly'
             }
         
         try:
@@ -141,3 +140,7 @@ class SkinDiseasePredictor:
     def is_loading(self):
         """Check if model is currently loading."""
         return self._is_loading
+
+    def last_error(self):
+        """Get latest model loading error if any."""
+        return self._last_error

@@ -103,11 +103,16 @@ async def predict_api(file: UploadFile = File(...)):
 
     if not predictor.is_model_loaded():
         predictor.start_loading_in_background()
+        loading_error = predictor.last_error()
+        warmup_message = "Model is warming up. Please retry in 10-20 seconds."
+        if loading_error:
+            warmup_message = f"Model failed to load: {loading_error}. Retrying in background."
         return JSONResponse(
-            status_code=503,
+            status_code=202,
             content={
                 "success": False,
-                "error": "Model is warming up. Please retry in 10-20 seconds."
+                "warming_up": True,
+                "error": warmup_message
             }
         )
     
@@ -129,5 +134,7 @@ async def health_check():
     """Health check endpoint"""
     return {
         "status": "healthy",
-        "model_loaded": predictor.is_model_loaded() if predictor else False
+        "model_loaded": predictor.is_model_loaded() if predictor else False,
+        "is_loading": predictor.is_loading() if predictor else False,
+        "last_error": predictor.last_error() if predictor else None
     }
