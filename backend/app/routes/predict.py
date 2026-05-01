@@ -27,12 +27,12 @@ async def home(request: Request):
 async def predict(request: Request, file: Optional[UploadFile] = File(None)):
     """Handle image upload and return prediction results"""
     
-    if not predictor or not predictor.is_model_loaded():
+    if not predictor:
         return templates.TemplateResponse(
             "result.html", 
             {
                 "request": request, 
-                "error": "Model not loaded properly. Please check server logs."
+                "error": "Predictor not initialized. Please check server logs."
             }
         )
     
@@ -85,10 +85,10 @@ async def predict(request: Request, file: Optional[UploadFile] = File(None)):
 async def predict_api(file: UploadFile = File(...)):
     """REST API endpoint for JSON response"""
     
-    if not predictor or not predictor.is_model_loaded():
+    if not predictor:
         return JSONResponse(
             status_code=500,
-            content={"success": False, "error": "Model not loaded"}
+            content={"success": False, "error": "Predictor not initialized"}
         )
     
     try:

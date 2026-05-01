@@ -1,21 +1,13 @@
-import tensorflow as tf
-import keras
 import numpy as np
-from PIL import Image
 import os
-
-# Monkey-patch Keras Dense layer to fix serialization bug with 'quantization_config'
-# This is a known issue in some Keras 3 versions when loading models saved with different metadata
-original_dense_init = keras.layers.Dense.__init__
-def patched_dense_init(self, *args, **kwargs):
-    kwargs.pop('quantization_config', None)
-    return original_dense_init(self, *args, **kwargs)
-keras.layers.Dense.__init__ = patched_dense_init
 
 class SkinDiseasePredictor:
     def __init__(self, model_path):
-        """Load the trained model"""
+        """Initialize predictor and lazy-load model on first prediction."""
         self.model = None
+        self.model_path = model_path
+        self._tf = None
+        self._load_attempted = False
         self.class_names = [
             'Atopic Dermatitis', 
             'Normal Skin', 
@@ -25,11 +17,26 @@ class SkinDiseasePredictor:
             'Chickenpox'
         ]
         self.img_size = (224, 224)
-        self.load_model(model_path)
     
-    def load_model(self, model_path):
-        """Load the trained Keras model"""
+    def load_model(self):
+        """Load the trained Keras model only when needed."""
+        if self._load_attempted:
+            return
+        self._load_attempted = True
+
         try:
+            import tensorflow as tf
+            import keras
+
+            # Monkey-patch Keras Dense layer to fix serialization metadata mismatches.
+            original_dense_init = keras.layers.Dense.__init__
+            def patched_dense_init(self, *args, **kwargs):
+                kwargs.pop('quantization_config', None)
+                return original_dense_init(self, *args, **kwargs)
+            keras.layers.Dense.__init__ = patched_dense_init
+
+            self._tf = tf
+            model_path = self.model_path
             if os.path.exists(model_path):
                 # Use standalone keras for loading as it handles Keras 3 formats (.keras) better
                 self.model = keras.models.load_model(model_path, compile=False)
@@ -54,7 +61,7 @@ class SkinDiseasePredictor:
         image_array = np.array(image, dtype=np.float32)
         
         # Preprocess for ResNet50
-        image_array = tf.keras.applications.resnet.preprocess_input(image_array)
+        image_array = self._tf.keras.applications.resnet.preprocess_input(image_array)
         
         # Add batch dimension
         image_array = np.expand_dims(image_array, axis=0)
@@ -63,6 +70,9 @@ class SkinDiseasePredictor:
     
     def predict(self, image):
         """Make prediction on a single image"""
+        if self.model is None:
+            self.load_model()
+
         if self.model is None:
             return {
                 'success': False,

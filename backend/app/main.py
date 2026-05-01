@@ -13,7 +13,7 @@ predictor_instance = None
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Startup: Load the model
+    # Startup: set predictor without loading heavy model yet (lazy load on first prediction)
     global predictor_instance
     model_path = os.getenv('MODEL_PATH', 'trained_model/SKIN_MODEL_BEST.keras')
     
@@ -30,7 +30,7 @@ async def lifespan(app: FastAPI):
             model_path = path
             break
     
-    print(f"Loading model from: {model_path}")
+    print(f"Configured model path: {model_path}")
     predictor_instance = SkinDiseasePredictor(model_path)
     
     # Set predictor in routes
