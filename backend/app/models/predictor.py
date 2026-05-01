@@ -1,5 +1,6 @@
 import numpy as np
 import os
+import threading
 
 class SkinDiseasePredictor:
     def __init__(self, model_path):
@@ -8,6 +9,8 @@ class SkinDiseasePredictor:
         self.model_path = model_path
         self._tf = None
         self._load_attempted = False
+        self._is_loading = False
+        self._load_lock = threading.Lock()
         self.class_names = [
             'Atopic Dermatitis', 
             'Normal Skin', 
@@ -20,33 +23,45 @@ class SkinDiseasePredictor:
     
     def load_model(self):
         """Load the trained Keras model only when needed."""
-        if self._load_attempted:
+        with self._load_lock:
+            if self._load_attempted:
+                return
+            self._load_attempted = True
+            self._is_loading = True
+
+            try:
+                import tensorflow as tf
+                import keras
+
+                # Monkey-patch Keras Dense layer to fix serialization metadata mismatches.
+                original_dense_init = keras.layers.Dense.__init__
+                def patched_dense_init(self, *args, **kwargs):
+                    kwargs.pop('quantization_config', None)
+                    return original_dense_init(self, *args, **kwargs)
+                keras.layers.Dense.__init__ = patched_dense_init
+
+                self._tf = tf
+                model_path = self.model_path
+                if os.path.exists(model_path):
+                    # Use standalone keras for loading as it handles Keras 3 formats (.keras) better
+                    self.model = keras.models.load_model(model_path, compile=False)
+                    print(f"Model loaded successfully from {model_path}")
+                else:
+                    print(f"Model not found at {model_path}")
+                    raise FileNotFoundError(f"Model not found at {model_path}")
+            except Exception as e:
+                print(f"Error loading model: {e}")
+                self.model = None
+            finally:
+                self._is_loading = False
+
+    def start_loading_in_background(self):
+        """Start model loading in a background thread if needed."""
+        if self.model is not None or self._load_attempted or self._is_loading:
             return
-        self._load_attempted = True
 
-        try:
-            import tensorflow as tf
-            import keras
-
-            # Monkey-patch Keras Dense layer to fix serialization metadata mismatches.
-            original_dense_init = keras.layers.Dense.__init__
-            def patched_dense_init(self, *args, **kwargs):
-                kwargs.pop('quantization_config', None)
-                return original_dense_init(self, *args, **kwargs)
-            keras.layers.Dense.__init__ = patched_dense_init
-
-            self._tf = tf
-            model_path = self.model_path
-            if os.path.exists(model_path):
-                # Use standalone keras for loading as it handles Keras 3 formats (.keras) better
-                self.model = keras.models.load_model(model_path, compile=False)
-                print(f"Model loaded successfully from {model_path}")
-            else:
-                print(f"Model not found at {model_path}")
-                raise FileNotFoundError(f"Model not found at {model_path}")
-        except Exception as e:
-            print(f"Error loading model: {e}")
-            self.model = None
+        thread = threading.Thread(target=self.load_model, daemon=True)
+        thread.start()
     
     def preprocess_image(self, image):
         """Preprocess image for model prediction"""
@@ -71,7 +86,11 @@ class SkinDiseasePredictor:
     def predict(self, image):
         """Make prediction on a single image"""
         if self.model is None:
-            self.load_model()
+            return {
+                'success': False,
+                'error': 'Model is initializing. Please retry in a few seconds.',
+                'is_loading': True
+            }
 
         if self.model is None:
             return {
@@ -118,3 +137,7 @@ class SkinDiseasePredictor:
     def is_model_loaded(self):
         """Check if model is loaded"""
         return self.model is not None
+
+    def is_loading(self):
+        """Check if model is currently loading."""
+        return self._is_loading

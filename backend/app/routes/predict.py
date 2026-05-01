@@ -35,6 +35,16 @@ async def predict(request: Request, file: Optional[UploadFile] = File(None)):
                 "error": "Predictor not initialized. Please check server logs."
             }
         )
+
+    if not predictor.is_model_loaded():
+        predictor.start_loading_in_background()
+        return templates.TemplateResponse(
+            "result.html",
+            {
+                "request": request,
+                "error": "Model is warming up on server. Please retry in 10-20 seconds."
+            }
+        )
     
     if not file:
         return templates.TemplateResponse(
@@ -89,6 +99,16 @@ async def predict_api(file: UploadFile = File(...)):
         return JSONResponse(
             status_code=500,
             content={"success": False, "error": "Predictor not initialized"}
+        )
+
+    if not predictor.is_model_loaded():
+        predictor.start_loading_in_background()
+        return JSONResponse(
+            status_code=503,
+            content={
+                "success": False,
+                "error": "Model is warming up. Please retry in 10-20 seconds."
+            }
         )
     
     try:
