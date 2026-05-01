@@ -1,0 +1,27 @@
+/* Additional custom styles if needed */
+:root {
+    --primary: #667eea;
+    --secondary: #764ba2;
+}
+
+.custom-toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .prediction-class {
+        font-size: 1.5rem;
+    }
+    
+    .content {
+        padding: 20px;
+    }
+    
+    .header h1 {
+        font-size: 1.8rem;
+    }
+}

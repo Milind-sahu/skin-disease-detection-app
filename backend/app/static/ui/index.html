@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/static/ui/style.css" />
+    <link rel="icon" type="image/x-icon" href="/static/ui/images/logo.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Galindo&family=Inria+Serif:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <title>CUTIS.AI</title>
+  </head>
+
+  <body>
+    <div class="bg">
+      <div class="circle circle1"></div>
+      <div class="circle circle2"></div>
+    </div>
+    <div class="topbar">
+      <div class="logo">
+        <img src="/static/ui/images/logo.png" alt="logo" class="logo-image" />
+        <span class="title">CUTIS.AI</span>
+      </div>
+      <div class="nav-links">
+        <a href="#">HOME</a>
+        <a href="#conditions">SKIN DISEASES</a>
+        <a href="#upload">UPLOAD</a>
+        <a href="#team">TEAM</a>
+        <a href="#contact">CONTACT</a>
+      </div>
+    </div>
+    <div class="hero-container">
+      <div class="left">
+        <div class="content">
+          <div class="left-content">
+            <div class="hero-text">
+              <h1 class="detect-h1">DETECT</h1>
+              <h1 class="skin-h1">SKIN CONDITIONS</h1>
+              <p class="tag-line">Early, Easily, Instantly</p>
+              <p class="intro-p">
+                AI-powered analysis to help identify potential skin diseases
+                from images.
+              </p>
+              <p class="desc-p">
+                Our system analyzes skin images using advanced machine learning
+                to identify patterns associated with common skin conditions. Get
+                fast, intelligent insights that support early awareness and help
+                you decide when to seek professional care.
+              </p>
+            </div>
+            <button class="start-btn">Get Started</button>
+          </div>
+          <div class="content-right">
+            <img
+              src="/static/ui/images/Hero-Image.png"
+              alt="Hero Image"
+              class="hero-image"
+            />
+            <div class="label">
+              <span>Scan Skin</span>
+              <span>Detect Early</span>
+              <span>Stay Aware</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="right">
+        <div class="right-top"></div>
+        <div class="right-bottom"></div>
+        <img src="/static/ui/images/Doctors-logo.png" alt="Doctor Logo" />
+        <p class="rotated-text">AI SKIN ANALYSIS</p>
+      </div>
+    </div>
+
+    <!-- Conditions we detect -->
+    <section class="conditions-section" id="conditions">
+      <h2 class="conditions-title">CONDITIONS WE DETECT</h2>
+      <p class="conditions-subtitle">
+        Our deep learning model is trained to identify six common skin
+        conditions with high accuracy, providing preliminary insights to support
+        informed decision-making.
+      </p>
+
+      <div class="conditions-timeline" aria-label="Conditions timeline">
+        <article class="condition-card condition-top">
+          <div class="condition-badge" aria-hidden="true">
+            <span class="condition-number">1</span>
+            <span class="condition-line"></span>
+          </div>
+          <div class="condition-panel condition-green">
+            <div class="condition-avatar" aria-hidden="true"></div>
+            <h3 class="condition-name">Atopic Dermatitis</h3>
+            <p class="condition-desc">
+              Chronic, itchy inflammation of the skin, often associated with allergies.
+            </p>
+          </div>
+        </article>
+
+        <article class="condition-card condition-bottom">
+          <div class="condition-badge" aria-hidden="true">
+            <span class="condition-number">2</span>
+            <span class="condition-line"></span>
+          </div>
+          <div class="condition-panel condition-blue">
+            <div class="condition-avatar" aria-hidden="true"></div>
+            <h3 class="condition-name">Normal Skin</h3>
+            <p class="condition-desc">
+              Healthy skin without visible signs of disease or irritation.
+            </p>
+          </div>
+        </article>
+
+        <article class="condition-card condition-top">
+          <div class="condition-badge" aria-hidden="true">
+            <span class="condition-number">3</span>
+            <span class="condition-line"></span>
+          </div>
+          <div class="condition-panel condition-green">
+            <div class="condition-avatar" aria-hidden="true"></div>
+            <h3 class="condition-name">Melanoma</h3>
+            <p class="condition-desc">
+              A serious type of skin cancer that develops from pigment-producing cells.
+            </p>
+          </div>
+        </article>
+
+        <article class="condition-card condition-bottom">
+          <div class="condition-badge" aria-hidden="true">
+            <span class="condition-number">4</span>
+            <span class="condition-line"></span>
+          </div>
+          <div class="condition-panel condition-blue">
+            <div class="condition-avatar" aria-hidden="true"></div>
+            <h3 class="condition-name">Seborrheic Keratoses</h3>
+            <p class="condition-desc">
+              Common noncancerous skin growth that can look like a wart or mole.
+            </p>
+          </div>
+        </article>
+
+        <article class="condition-card condition-top">
+          <div class="condition-badge" aria-hidden="true">
+            <span class="condition-number">5</span>
+            <span class="condition-line"></span>
+          </div>
+          <div class="condition-panel condition-green">
+            <div class="condition-avatar" aria-hidden="true"></div>
+            <h3 class="condition-name">Nail Fungus</h3>
+            <p class="condition-desc">
+              A common condition that begins as a white or yellow spot under the tip of your fingernail or toenail.
+            </p>
+          </div>
+        </article>
+
+        <article class="condition-card condition-bottom">
+          <div class="condition-badge" aria-hidden="true">
+            <span class="condition-number">6</span>
+            <span class="condition-line"></span>
+          </div>
+          <div class="condition-panel condition-blue">
+            <div class="condition-avatar" aria-hidden="true"></div>
+            <h3 class="condition-name">Chickenpox</h3>
+            <p class="condition-desc">
+              A highly contagious viral infection causing an itchy, blister-like rash on the skin.
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <div class="upload-box" id="upload">
+      <h1>Upload Photo for Analysis</h1>
+      <p>Upload a close-up, clear image of the affected area</p>
+      <div class="upload-container">
+        <div class="upload-text">Upload image</div>
+        <div class="drop-zone" id="dropZone">
+          <img
+            src="/static/ui/images/upload-img-icon.png"
+            alt="upload-svg"
+            class="upload-img-icon"
+          />
+          <div class="drop-zone-title">Drag & drop your Image here</div>
+          <div class="drop-zone-sub">or</div>
+          <button class="browse-button" id="browseBtn" type="button">
+            <span> BROWSE IMAGE </span>
+          </button>
+        </div>
+
+        <!-- Dynamic file list with progress and actions -->
+        <div class="file-upload-progress">
+          <span class="empty-progress">📂 No files selected</span>
+        </div>
+
+        <!-- UPLOAD / CANCEL buttons row -->
+        <div class="action-buttons">
+          <button class="btn btn-primary" id="uploadBtn">UPLOAD</button>
+          <button class="btn btn-secondary" id="cancelBtn">CANCEL</button>
+        </div>
+
+        <!-- Prediction Result -->
+        <div id="predictionResult" class="prediction-result" style="display: none; margin-top: 2rem; padding: 2rem; background: rgba(255, 255, 255, 0.05); border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.1);">
+          <h2 style="color: #fff; margin-bottom: 1rem; font-family: 'Barlow', sans-serif;">Analysis Result</h2>
+          <div style="display: flex; gap: 2rem; align-items: center; flex-wrap: wrap;">
+            <div id="resultImageContainer" style="flex: 1; min-width: 200px;">
+              <img id="resultImage" src="" alt="Analyzed Image" style="width: 100%; border-radius: 8px; border: 2px solid #3b82f6;" />
+            </div>
+            <div style="flex: 2; min-width: 250px;">
+              <div style="margin-bottom: 1.5rem;">
+                <span style="color: #94a3b8; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;">Condition Detected</span>
+                <h3 id="detectedClass" style="color: #3b82f6; font-size: 2rem; margin: 0.5rem 0;">-</h3>
+              </div>
+              <div style="margin-bottom: 1.5rem;">
+                <span style="color: #94a3b8; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;">Confidence Score</span>
+                <div style="display: flex; align-items: center; gap: 1rem; margin-top: 0.5rem;">
+                  <div style="flex: 1; height: 8px; background: rgba(255, 255, 255, 0.1); border-radius: 4px; overflow: hidden;">
+                    <div id="confidenceBar" style="height: 100%; background: #3b82f6; width: 0%;"></div>
+                  </div>
+                  <span id="confidenceValue" style="color: #fff; font-weight: 700; min-width: 50px;">0%</span>
+                </div>
+              </div>
+              <p id="resultDisclaimer" style="color: #94a3b8; font-size: 0.85rem; font-style: italic;">
+                Disclaimer: This analysis is for informational purposes only. Please consult a medical professional for an accurate diagnosis.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Meet Our Team section -->
+    <section class="team-section" id="team">
+      <h2 class="team-title">MEET OUR TEAM</h2>
+      <div class="team-cards">
+        <article class="team-card">
+          <div class="team-avatar" aria-hidden="true"></div>
+          <h3 class="team-name">Milind Sahu</h3>
+          <p class="team-desc">
+            AI Ethics researcher and math minor. Passionate about tech for
+            social good. Tutors first-year CS students.
+          </p>
+          <div class="team-social-links">
+            <a class="team-social-link" href="#" aria-label="Instagram">
+              <img src="/static/ui/images/logos/insta.png" alt="Instagram" class="social-icon" />
+            </a>
+            <a class="team-social-link" href="#" aria-label="LinkedIn">
+              <img src="/static/ui/images/logos/linkedin.png" alt="LinkedIn" class="social-icon" />
+            </a>
+            <a class="team-social-link" href="#" aria-label="GitHub">
+              <img src="/static/ui/images/logos/github.png" alt="GitHub" class="social-icon" />
+            </a>
+            <a class="team-social-link" href="#" aria-label="Email">
+              <img src="/static/ui/images/logos/mail.png" alt="Email" class="social-icon" />
+            </a>
+          </div>
+        </article>
+
+        <article class="team-card">
+          <div class="team-avatar" aria-hidden="true"></div>
+          <h3 class="team-name">Bhupesh Dewangan</h3>
+          <p class="team-desc">
+            AI Ethics researcher and math minor. Passionate about tech for
+            social good. Tutors first-year CS students.
+          </p>
+          <div class="team-social-links">
+            <a class="team-social-link" href="#" aria-label="Instagram">
+              <img src="/static/ui/images/logos/insta.png" alt="Instagram" class="social-icon" />
+            </a>
+            <a class="team-social-link" href="#" aria-label="LinkedIn">
+              <img src="/static/ui/images/logos/linkedin.png" alt="LinkedIn" class="social-icon" />
+            </a>
+            <a class="team-social-link" href="#" aria-label="GitHub">
+              <img src="/static/ui/images/logos/github.png" alt="GitHub" class="social-icon" />
+            </a>
+            <a class="team-social-link" href="#" aria-label="Email">
+              <img src="/static/ui/images/logos/mail.png" alt="Email" class="social-icon" />
+            </a>
+          </div>
+        </article>
+
+        <article class="team-card">
+          <div class="team-avatar" aria-hidden="true"></div>
+          <h3 class="team-name">Jayyendra Kumar</h3>
+          <p class="team-desc">
+            AI Ethics researcher and math minor. Passionate about tech for
+            social good. Tutors first-year CS students.
+          </p>
+          <div class="team-social-links">
+            <a class="team-social-link" href="#" aria-label="Instagram">
+              <img src="/static/ui/images/logos/insta.png" alt="Instagram" class="social-icon" />
+            </a>
+            <a class="team-social-link" href="#" aria-label="LinkedIn">
+              <img src="/static/ui/images/logos/linkedin.png" alt="LinkedIn" class="social-icon" />
+            </a>
+            <a class="team-social-link" href="#" aria-label="GitHub">
+              <img src="/static/ui/images/logos/github.png" alt="GitHub" class="social-icon" />
+            </a>
+            <a class="team-social-link" href="#" aria-label="Email">
+              <img src="/static/ui/images/logos/mail.png" alt="Email" class="social-icon" />
+            </a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Contact Us section -->
+    <section class="contact-section" id="contact">
+      <div class="contact-card">
+        <h1 class="contact-title">CONTACT US</h1>
+        <p class="contact-subtitle">
+          If you have any inquiries or just want to say hi, please use the
+          contact form!
+        </p>
+
+        <form class="contact-form">
+          <div class="contact-row">
+            <div class="contact-field">
+              <label for="firstName">First name</label>
+              <input id="firstName" name="firstName" type="text" />
+            </div>
+            <div class="contact-field">
+              <label for="lastName">Last name</label>
+              <input id="lastName" name="lastName" type="text" />
+            </div>
+          </div>
+          <div class="contact-field">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" />
+          </div>
+          <div class="contact-field">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="5"></textarea>
+          </div>
+          <button type="submit" class="send-message-btn">Send Message</button>
+        </form>
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <h3>CUTIS.AI</h3>
+          <p>AI-powered skin image analysis for early awareness and informed decisions.</p>
+        </div>
+        <nav class="footer-links">
+          <a href="#">Home</a>
+          <a href="#conditions">Skin Diseases</a>
+          <a href="#upload">Upload</a>
+          <a href="#team">Team</a>
+          <a href="#contact">Contact</a>
+        </nav>
+      </div>
+      <p class="footer-copy">© 2026 CUTIS.AI. All rights reserved.</p>
+    </footer>
+
+    <script src="/static/ui/script.js"></script>
+  </body>
+</html>
